@@ -1,14 +1,26 @@
-const mongoose = require('mongoose');
-// Conexión a MongoDB
-const conectDB =async()=>{
-  try{  
-    const con =await mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/recetasDB')
-    console.log("Conectado a MongoDB");  
-  } catch(error){    
-    console.error('Error al conectar a MongoDB:', error)
-    process.exit(1);
-  }
-        
-}    
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-module.exports = {conectDB}
+dotenv.config(); // Cargar variables de entorno
+
+const mongoURI = process.env.MONGODB_URL;
+
+if (!mongoURI) {
+    console.log(mongoURI);
+    console.error("❌ Error: MONGO_URI no está definido en .env");
+    process.exit(1); // Detener la ejecución si no hay URI
+}
+
+export const conectDB = async () => {
+    try {
+        await mongoose.connect(mongoURI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log("✅ Conexión exitosa a MongoDB");
+    } catch (error) {
+        console.error("❌ Error de conexión a MongoDB:", error);
+        process.exit(1);
+    }
+};
+

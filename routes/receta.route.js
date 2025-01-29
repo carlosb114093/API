@@ -1,12 +1,5 @@
-const express = require('express');
-const { postRecetas,
-    getRecetas,
-    getReceta,
-    updateReceta,
-    inactiveReceta,
-    deleteReceta,
-    searchRecetasByNombre
- } = require ('./../controller/receta.controller');
+import express from "express";
+import { postRecetas, getRecetas, getReceta, updateReceta, inactiveReceta, deleteReceta, searchRecetasByNombre } from "../controller/receta.controller.js";
  
 
 const router = express.Router();
@@ -18,5 +11,5 @@ router.get('/buscar/:nombre', searchRecetasByNombre);
 router.patch('/recetas/:id', updateReceta);
 router.patch('/recetas/inactivar/:id', inactiveReceta);
 router.delete('/recetas/:id', deleteReceta);
-module.exports= router;
+export default router; 
 

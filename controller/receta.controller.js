@@ -1,5 +1,5 @@
-const Receta = require('../models/Receta');
-const postRecetas = async (req, res) => {
+import Receta from '../models/Receta.js';
+export const postRecetas = async (req, res) => {
     try {
         const nuevaReceta = new Receta(req.body);
         const recetaGuardada = await nuevaReceta.save();
@@ -10,7 +10,7 @@ const postRecetas = async (req, res) => {
 };
 
 // Obtener todas las recetas (GET)
-const getRecetas = async (req, res) => {
+export const getRecetas = async (req, res) => {
     try {
         const recetas = await Receta.find();
         res.json(recetas);
@@ -20,7 +20,7 @@ const getRecetas = async (req, res) => {
 };
 
 // Obtener una receta por ID (GET)
-const getReceta = async (req, res) => {
+export const getReceta = async (req, res) => {
     try {
         const receta = await Receta.findById(req.params.id);
         if (!receta) {
@@ -32,7 +32,7 @@ const getReceta = async (req, res) => {
     }
 };
 
-const searchRecetasByNombre = async (req, res) => {
+export const searchRecetasByNombre = async (req, res) => {
     try {
         const nombre = req.params.nombre; // Obtiene el nombre desde los parámetros de la URL
         const recetas = await Receta.find({ nombre: { $regex: nombre, $options: 'i' } }); // Búsqueda insensible a mayúsculas y minúsculas
@@ -48,7 +48,7 @@ const searchRecetasByNombre = async (req, res) => {
 };
 
 // Actualizar una receta por ID (PATCH)
-const updateReceta = async (req, res) => {
+export const updateReceta = async (req, res) => {
     try {
         const recetaActualizada = await Receta.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!recetaActualizada) {
@@ -61,7 +61,7 @@ const updateReceta = async (req, res) => {
 };
 
 // Eliminación lógica de una receta (PATCH)
-const inactiveReceta = async (req, res) => {
+export const inactiveReceta = async (req, res) => {
     try {
         const recetaInactivada = await Receta.findByIdAndUpdate(req.params.id, { estado: 'Inactiva' }, { new: true });
         if (!recetaInactivada) {
@@ -74,7 +74,7 @@ const inactiveReceta = async (req, res) => {
 };
 
 // Eliminar una receta por ID (DELETE)
-const deleteReceta = async (req, res) => {
+export const deleteReceta = async (req, res) => {
     try {
         const recetaEliminada = await Receta.findByIdAndDelete(req.params.id);
         if (!recetaEliminada) {
@@ -86,13 +86,3 @@ const deleteReceta = async (req, res) => {
     }
 };
 
-module.exports ={
-    postRecetas,
-    getRecetas,
-    getReceta,
-    updateReceta,
-    inactiveReceta,
-    deleteReceta,
-    searchRecetasByNombre
-
-}
