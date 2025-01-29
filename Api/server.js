@@ -1,22 +1,27 @@
 // Importar módulos
-const express = require('express');
-const cors = require('cors');
-require ('dotenv').config();
-const conect =require('../config/bd');
-//Importar rutas
-const recetaRoutes = require('../routes/receta.route')
-// Inicializar la aplicación
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import {conectDB} from "../config/bd.js";
+import recetaRoutes from "../routes/receta.route.js"; 
+// Configuración de variables de entorno
+dotenv.config();
+
+// Inicialización de la aplicación Express
 const app = express();
 const PORT = process.env.PORT || 3000;
-// Middleware
+
+// Middleware para parsear JSON y habilitar CORS
 app.use(express.json());
 app.use(cors());
 
-//Base de datos
-conect.conectDB();
-// Rutas CRUD
-app.use('/', recetaRoutes);
+// Conexión a la base de datos
+conectDB();
+
+// Configuración de rutas
+app.use("/", recetaRoutes);
+
 // Iniciar el servidor
 app.listen(PORT, () => {
-    console.log(`Servidor en funcionamiento en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
