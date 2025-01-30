@@ -2,8 +2,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import {conectDB} from "../config/bd.js";
-import recetaRoutes from "../routes/receta.route.js"; 
+import {conectDB} from "./config/bd.js";
+import recetaRoutes from "./routes/receta.route.js"; 
 // Configuración de variables de entorno
 dotenv.config();
 
